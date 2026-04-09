@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timeline Map</title>
+<style>
+  /* Bottom Nav */
+.nav-bar {
+  position: fixed;
+  bottom: 25px;
+  left: 20px;
+  right: 20px;
+  background-color: #4B475B;
+  height: 80px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: #3A3648;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-circle.active {
+  background-color: #3A3648;
+}
+
+.nav-bar a {
+  text-decoration: none;
+}
+
+.nav-circle img {
+  width: 28px;
+  height: 28px;
+} 
+
+  body {
+    background-color: #1c1926;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+  }
+
+  button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    margin: 10px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  #uploadBtn {
+    background-color: #6a5acd;
+    color: #fff;
+  }
+
+  #goDataBtn {
+    background-color: #ff6b6b;
+    color: #fff;
+  }
+
+  #fileName {
+    margin: 10px 0;
+  }
+
+  .toggle-container {
+    display: inline-flex;
+    background-color: #4b475b;
+    border-radius: 40px;
+    margin: 20px 0;
+  }
+
+  .toggle-btn {
+    padding: 10px 24px;
+    border-radius: 32px;
+    cursor: pointer;
+    color: #c3c0d5;
+  }
+
+  .toggle-btn.active {
+    background-color: #fff;
+    color: #1c1926;
+  }
+
+  #mapImage {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 24px;
+    margin: 20px 0;
+  }
+
+  .list {
+    text-align: left;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .list-item {
+    margin-bottom: 6px;
+    color: #c3c0d5;
+  }
+</style>
+</head>
+<body>
+
+<h1>Heat Map</h1>
+
+<input type="file" id="fileInput" accept=".json" style="display:none">
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".json" required>
+    <button type="submit"
+    style="background-color: purple; color: white; width: 260px; height: 40px; border: none; border-radius: 15px; cursor: pointer;"
+    >Upload & Show Heatmap</button>
+  </form>
+
+<div id="fileName"></div>
+
+<div class="toggle-container">
+  <div class="toggle-btn active" id="placesBtn">Places</div>
+  <div class="toggle-btn" id="stressBtn">Stress</div>
+</div>
+
+<img id="mapImage" src="heatmap-places.png" alt="Heatmap">
+
+<div class="list">
+  <h3 id="listTitle">Possible places:</h3>
+  <div class="list-item">**************</div>
+  <div class="list-item">**************</div>
+  <div class="list-item">**************</div>
+</div>
+
+<script>
+  const uploadBtn = document.getElementById('uploadBtn');
+  const fileInput = document.getElementById('fileInput');
+  const fileNameDiv = document.getElementById('fileName');
+
+  uploadBtn.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(file) {
+      fileNameDiv.textContent = `Selected File: ${file.name}`;
+    }
+  });
+
+  // Toggle logic
+  const placesBtn = document.getElementById('placesBtn');
+  const stressBtn = document.getElementById('stressBtn');
+  const mapImage = document.getElementById('mapImage');
+  const listTitle = document.getElementById('listTitle');
+
+  placesBtn.addEventListener('click', () => {
+    mapImage.src = "{{ url_for('static', filename='assets/images/heatmap-places.png') }}";
+    listTitle.textContent = 'Possible places:';
+    placesBtn.classList.add('active');
+    stressBtn.classList.remove('active');
+  });
+
+  stressBtn.addEventListener('click', () => {
+    mapImage.src = "{{ url_for('static', filename='assets/images/heatmap-stress.png') }}";
+    listTitle.textContent = 'Most stressed:';
+    stressBtn.classList.add('active');
+    placesBtn.classList.remove('active');
+  });
+
+  // Go to data button (dummy)
+  const goDataBtn = document.getElementById('goDataBtn');
+  goDataBtn.addEventListener('click', () => {
+    alert("Going to your data... (implement your page here)");
+  });
+</script>
+
+<!-- Bottom Navigation -->
+<div class="nav-bar">
+  
+  <!-- HOME -->
+  <div class="nav-item">
+    <a href="{{ url_for('home_screen') }}">
+      <div class="nav-circle active">
+        <img src="{{ url_for('static', filename='assets/icons/dashboard.png') }}" alt="Dashboard">
+      </div>
+    </a>
+  </div>
+
+  <!-- MAPS -->
+  <div class="nav-item">
+    <a href="{{ url_for('maps') }}">
+      <div class="nav-circle">
+        <img src="{{ url_for('static', filename='assets/icons/map.png') }}" alt="Maps">
+      </div>
+    </a>
+  </div>
+
+  <!-- STATS -->
+  <div class="nav-item">
+    <a href="{{ url_for('stats') }}">
+      <div class="nav-circle">
+        <img src="{{ url_for('static', filename='assets/icons/stats.png') }}" alt="Stats">
+      </div>
+    </a>
+  </div>
+
+</div>
+
+</body>
+</html>

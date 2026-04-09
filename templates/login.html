@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prosto+One&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1c1926; /* COLORS.bg */
+      --white: #ffffff;
+      --gray: #aaa; /* COLORS.gray */
+      --accent: #4A90E2; /* COLORS.accent */
+      --input-bg: #2a2438; /* COLORS.inputBg */
+      --text-dark: #1E1A2B;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      font-family: 'Prosto One', cursive;
+      color: var(--white);
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo {
+      width: 160px;
+      height: 160px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 15px;
+      border-radius: 25px;
+      margin-top: 15px;
+      border: none;
+      background-color: var(--input-bg);
+      color: var(--white);
+      font-family: 'Prosto One', cursive;
+      font-size: 16px;
+    }
+
+    input::placeholder {
+      color: #999;
+    }
+
+    .link {
+      margin-top: 5px;
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 14px;
+      align-self: flex-end;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+      border-radius: 25px;
+      background-color: var(--white);
+      color: var(--text-dark);
+      font-family: 'Prosto One', cursive;
+      font-size: 18px;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 30px;
+      display: inline-block;
+    }
+
+    .register-link {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .register-link a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Logo -->
+     {{ url_for('static', filename='assets/icons/logo_full.png') }}
+    <img src="{{ url_for('static', filename='assets/icons/logo_full.png') }}" alt="Logo" class="logo">
+
+    <!-- Title -->
+    <h1>Welcome back!</h1>
+
+    <!-- Inputs -->
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+
+    <!-- Forgot password -->
+    <a href="forgot" class="link">Forgot Password?</a>
+
+    <!-- Login button -->
+    <button type="submit"
+    style="background-color: purple; color: white; width: 60px; height: 40px; border: none; border-radius: 15px; cursor: pointer;"
+    >Login</button>
+
+
+    <!-- Register link -->
+    <div class="register-link">
+      Don't have an account? <a href="register">Register Now</a>
+    </div>
+  </div>
+
+</body>
+</html>

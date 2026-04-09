@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistics</title>
+<style>
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1C1926;
+    color: white;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 38px;
+    margin-bottom: 20px;
+  }
+
+  /* Toggle */
+  .toggle-wrapper {
+    display: flex;
+    background-color: #4B475B;
+    border-radius: 50px;
+    padding: 5px;
+    margin-bottom: 25px;
+    width: fit-content;
+  }
+  .toggle-btn {
+    flex: 1;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 40px;
+    cursor: pointer;
+    color: #D0CDDD;
+  }
+  .toggle-btn.active {
+    background-color: #fff;
+    color: #1C1926;
+    font-weight: bold;
+  }
+
+  /* Graph Card */
+  .graph-card {
+    background-color: #AEE6F8;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-bottom: 25px;
+    width: 100%;
+    height: 260px;
+  }
+
+  .graph-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Boxes */
+  .row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+  .box {
+    width: 47%;
+    border-radius: 20px;
+    padding: 15px;
+  }
+  .box-blue { background-color: #4A8CFF; color: #000; }
+  .box-gray { background-color: #E6E6E6; color: #000; }
+  .box img { width: 30px; height: 30px; }
+  .box-title { margin-top: 10px; font-size: 16px; }
+  .box-graph { margin-top: 15px; width: 100%; height: 60px; object-fit: cover; }
+
+  /* AI Card */
+  .ai-card {
+    background-color: #4B475B;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+  .ai-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .ai-header img { width: 30px; height: 30px; margin-right: 10px; }
+  .ai-title { font-size: 18px; color: #fff; }
+  .ai-text { color: #E0DFF2; line-height: 20px; font-size: 14px; }
+  .bold { font-weight: bold; color: #fff; }
+  .ai-chat-btn {
+    margin-top: 15px;
+    background-color: #fff;
+    color: #1C1926;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  /* Bottom Nav */
+  .nav-bar {
+    position: fixed;
+    bottom: 25px;
+    left: 20px;
+    right: 20px;
+    background-color: #4B475B;
+    height: 80px;
+    border-radius: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+  }
+  .nav-item, .nav-item-active {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .nav-item { background-color: #3A3648; }
+  .nav-item-active { background-color: #fff; }
+  .nav-item img { width: 28px; height: 28px; }
+</style>
+</head>
+<body>
+
+<h1>Your<br>Statistics</h1>
+
+<div class="toggle-wrapper">
+  <div class="toggle-btn active" id="weekBtn">Week</div>
+  <div class="toggle-btn" id="monthBtn">Month</div>
+</div>
+
+<!--<div class="graph-card" id="graphCard">
+  <img src="{{ url_for('static', filename='assets/images/week-stats.png') }}" id="graphImage" alt="Graph">
+</div>-->
+
+<div class="row">
+  <div class="box box-blue">
+    <img src="{{ url_for('static', filename='assets/images/walk.png') }}" alt="Walk">
+    <div class="box-title">Walk<br>.....</div>
+    <img src="{{ url_for('static', filename='assets/images/graph-steps.png') }}" class="box-graph" alt="Steps Graph">
+  </div>
+  <div class="box box-gray">
+    <img src="{{ url_for('static', filename='assets/images/heart.png') }}" alt="Heart">
+    <div class="box-title">Stress<br>levels</div>
+    <img src="{{ url_for('static', filename='assets/images/graph-stress.png') }}" class="box-graph" alt="Stress Graph">
+  </div>
+</div>
+
+<div class="ai-card">
+  <div class="ai-header">
+    <img src="{{ url_for('static', filename='assets/images/ai.png') }}" alt="AI">
+    <div class="ai-title">AI Suggestion</div>
+  </div>
+  <div class="ai-text">
+    Based on your last week, you should aim for <span class="bold">2.5 miles</span> today and reduce calorie intake by <span class="bold">150 kcal</span>.
+  </div>
+  <div class="ai-chat-btn" onclick="alert('Open AI Coach')">Open AI Coach</div>
+</div>
+
+<div class="nav-bar">
+  <div class="nav-item" onclick="alert('Go Home')">
+    <img src="dashboard.png" alt="Home">
+  </div>
+  <div class="nav-item" onclick="alert('Go Maps')">
+    <img src="map.png" alt="Maps">
+  </div>
+  <div class="nav-item-active">
+    <img src="stats.png" alt="Stats">
+  </div>
+</div>
+
+<script>
+  const weekBtn = document.getElementById('weekBtn');
+  const monthBtn = document.getElementById('monthBtn');
+  const graphImage = document.getElementById('graphImage');
+
+  weekBtn.addEventListener('click', () => {
+    weekBtn.classList.add('active');
+    monthBtn.classList.remove('active');
+    graphImage.src = "{{ url_for('static', filename='assets/images/week-stats.png') }}";
+  });
+
+  monthBtn.addEventListener('click', () => {
+    monthBtn.classList.add('active');
+    weekBtn.classList.remove('active');
+    graphImage.src = "{{ url_for('static', filename='assets/images/month-stats.png') }}";
+  });
+</script>
+
+<!-- Bottom Navigation -->
+<div class="nav-bar">
+  
+  <!-- HOME -->
+  <div class="nav-item">
+    <a href="{{ url_for('home_screen') }}">
+      <div class="nav-circle active">
+        <img src="{{ url_for('static', filename='assets/icons/dashboard.png') }}" alt="Dashboard">
+      </div>
+    </a>
+  </div>
+
+  <!-- MAPS -->
+  <div class="nav-item">
+    <a href="{{ url_for('maps') }}">
+      <div class="nav-circle">
+        <img src="{{ url_for('static', filename='assets/icons/map.png') }}" alt="Maps">
+      </div>
+    </a>
+  </div>
+
+  <!-- STATS -->
+  <div class="nav-item">
+    <a href="{{ url_for('stats') }}">
+      <div class="nav-circle">
+        <img src="{{ url_for('static', filename='assets/icons/stats.png') }}" alt="Stats">
+      </div>
+    </a>
+  </div>
+
+</div>
+
+</body>
+</html>

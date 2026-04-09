@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Prosto+One&display=swap" rel="stylesheet">
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Prosto One', cursive;
+    background-color: #1c1926;
+    color: white;
+    height: 100%;
+  }
+
+  .container {
+    padding: 60px 24px 140px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .hello {
+    font-size: 34px;
+    margin-bottom: 10px;
+  }
+
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .search-bubble {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: #d5dbff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .search-bubble img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+  }
+
+  .graph-card {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 25px;
+  }
+
+  .graph-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .card-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 2%;
+  }
+
+  .card {
+    width: 48%;
+    height: 180px;
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blue-card { background-color: #5C8AEC; }
+  .gray-card { background-color: #d8d7dd; }
+
+  .card img {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: black;
+  }
+
+  .card-value {
+    font-size: 20px;
+    color: black;
+  }
+
+  /* Bottom nav */
+  .nav-bar {
+    position: fixed;
+    bottom: 30px;
+    left: 24px;
+    right: 24px;
+    height: 80px;
+    background-color: #4b475b;
+    border-radius: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .nav-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+
+  .nav-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: #3a3648;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-circle.active {
+    /*background-color: white;*/
+    background-color: #3a3648;
+  }
+
+  .nav-circle img {
+    width: 28px;
+    height: 28px;
+    filter: brightness(0.6);
+  }
+
+  .nav-circle.active img {
+    filter: none;
+  }
+
+  /* Scroll container */
+  .scroll {
+    flex: 1;
+    overflow-y: auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="container scroll">
+  <div class="hello">Hi!,<br>Youssef</div>
+
+  <div class="top-row">
+    <div class="search-bubble">
+      <img src="{{ url_for('static', filename='assets/icons/search.png') }}" alt="Search">
+    </div>
+    <img src="{{ url_for('static', filename='assets/images/user.jpg') }}" alt="User" class="avatar">
+  </div>
+
+  <div class="card-row">
+    <div class="card blue-card">
+      <img src="{{ url_for('static', filename='assets/icons/steps.png') }}" alt="Steps">
+      <div class="card-title">Steps<br>left</div>
+      <div class="card-value">50%</div>
+    </div>
+
+    <div class="card gray-card">
+      <img src="{{ url_for('static', filename='assets/icons/calories.png') }}" alt="Calories">
+      <div class="card-title">Calories<br>left</div>
+      <div class="card-value">{{ caloriess }}</div>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Navigation -->
+<div class="nav-bar">
+  
+  <!-- HOME -->
+  <div class="nav-item">
+    <a href="{{ url_for('home_screen') }}">
+      <div class="nav-circle active">
+        <img src="{{ url_for('static', filename='assets/icons/dashboard.png') }}" alt="Dashboard">
+      </div>
+    </a>
+  </div>
+
+  <!-- MAPS -->
+  <div class="nav-item">
+    <a href="{{ url_for('maps') }}">
+      <div class="nav-circle">
+        <img src="{{ url_for('static', filename='assets/icons/map.png') }}" alt="Maps">
+      </div>
+    </a>
+  </div>
+
+  <!-- STATS -->
+  <div class="nav-item">
+    <a href="{{ url_for('stats') }}">
+      <div class="nav-circle">
+        <img src="{{ url_for('static', filename='assets/icons/stats.png') }}" alt="Stats">
+      </div>
+    </a>
+  </div>
+
+</div>
+
+</body>
+</html>
